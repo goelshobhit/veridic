@@ -14,6 +14,7 @@ import { Switch, Route } from 'react-router-dom';
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Particles from 'react-particles-js';
+import particleJson from 'assets/particle.json';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -44,24 +45,7 @@ export function App() {
         style={{ position: 'absolute' }}
         height="100%"
         width="100%"
-        params={{
-          particles: {
-            color: {
-              value: '#000000',
-            },
-            line_linked: {
-              color: {
-                value: '#000000',
-              },
-            },
-            number: {
-              value: 50,
-            },
-            size: {
-              value: 3,
-            },
-          },
-        }}
+        params={particleJson}
       />
       <Container fixed disableGutters>
         <Switch>
