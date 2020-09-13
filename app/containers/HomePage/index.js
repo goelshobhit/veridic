@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -18,6 +18,7 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Input from 'components/InputAdornments';
 import AnimeCard from 'components/AnimeCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Snackbar from '@material-ui/core/Snackbar';
 
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -31,11 +32,31 @@ import { getAnimeData } from './actions';
 
 export function HomePage({
   OnRequestAnimeData,
-  homePage: { loading, data, hasMore },
+  homePage: { loading, data, hasMore, error },
 }) {
   const [qData, setQData] = useState();
   useInjectReducer({ key: 'homePage', reducer });
   useInjectSaga({ key: 'homePage', saga });
+
+  const [state, setState] = React.useState({
+    open: false,
+  });
+
+  const { open } = state;
+
+  const handleClick = () => {
+    setState({ open: true });
+  };
+
+  const handleClose = () => {
+    setState({ open: false });
+  };
+
+  useEffect(() => {
+    if (!isEmpty(error)) {
+      handleClick();
+    }
+  }, [error]);
 
   function inputChange(value) {
     OnRequestAnimeData(value);
@@ -82,7 +103,7 @@ export function HomePage({
         <title>HomePage</title>
         <meta name="description" content="Description of HomePage" />
       </Helmet>
-      <Input inputChange={debounce(inputChange, 1000)} />
+      <Input inputChange={debounce(inputChange, 1000)} data-aos="fade-down" />
       <InfiniteScroll
         pageStart={0}
         loadMore={loadMoreItemsIS}
@@ -97,22 +118,36 @@ export function HomePage({
             <div key="null" />
           )
         }
+        style={{ marginTop: '100px' }}
         className="List"
       >
         {renderItems()}
       </InfiniteScroll>
-      <Button
-        variant="contained"
-        color="secondary"
-        onClick={loadMoreItems}
-        disabled={isEmpty(data)}
-        style={{
-          margin: 24,
+      {!isEmpty(qData) && !isEmpty(data) ? (
+        <Button
+          variant="contained"
+          color="secondary"
+          onClick={loadMoreItems}
+          disabled={isEmpty(data)}
+          style={{
+            marginBottom: 24,
+            marginTop: 90,
+          }}
+          fullWidth
+        >
+          Load More
+        </Button>
+      ) : null}
+      <Snackbar
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'right',
         }}
-        fullWidth
-      >
-        Load More
-      </Button>
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Something went wrong"
+      />
     </div>
   );
 }

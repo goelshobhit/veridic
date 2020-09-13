@@ -15,7 +15,6 @@ const useStyles = makeStyles(() => ({
     objectFit: 'contain',
   },
   text: {
-    fontFamily: 'Open Sans',
     fontWeight: 900,
     fontSize: 18,
   },
@@ -24,14 +23,20 @@ const useStyles = makeStyles(() => ({
 export default function AnimeCard({ item }) {
   const classes = useStyles();
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} data-aos="flip-left">
       <CardMedia
         className={classes.media}
         image={item.image_url}
         title={item.type}
       />
       <CardContent>
-        <Typography variant="h6" className={classes.text}>
+        <Typography
+          variant="h6"
+          className={classes.text}
+          data-aos="flip-up"
+          data-aos-easing="ease-out-cubic"
+          data-aos-duration="200"
+        >
           {item.synopsis}
         </Typography>
       </CardContent>

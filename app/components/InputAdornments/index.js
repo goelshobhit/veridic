@@ -18,7 +18,6 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(3),
   },
   textField: {
-    width: '50vw',
     position: 'fixed',
     marginBottom: 20,
     color: '#ffff',
@@ -38,10 +37,8 @@ const useStyles = makeStyles(theme => ({
     color: '#fff',
     height: 80,
     fontSize: 30,
-    fontFamily: 'Open Sans',
     padding: 25,
     border: '3px solid #fff',
-    width: '50vw',
   },
   floatingLabelFocusStyle: {
     color: '#ffffff',
