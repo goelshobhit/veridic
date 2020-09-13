@@ -5,7 +5,6 @@
  */
 
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
@@ -14,16 +13,19 @@ import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import Particles from 'react-particles-js';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
+
+import Container from '@material-ui/core/Container';
+
 import makeSelectApp from './selectors';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
 
 import GlobalStyle from '../../global-styles';
 
@@ -38,17 +40,42 @@ export function App() {
 
   return (
     <div>
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route component={NotFoundPage} />
-      </Switch>
+      <Particles
+        style={{ position: 'absolute' }}
+        height="100%"
+        width="100%"
+        params={{
+          particles: {
+            color: {
+              value: '#000000',
+            },
+            line_linked: {
+              color: {
+                value: '#000000',
+              },
+            },
+            number: {
+              value: 50,
+            },
+            size: {
+              value: 3,
+            },
+          },
+        }}
+      />
+      <Container fixed disableGutters>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route component={NotFoundPage} />
+        </Switch>
+      </Container>
       <GlobalStyle />
     </div>
   );
 }
 
 App.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  ...App,
 };
 
 const mapStateToProps = createStructuredSelector({

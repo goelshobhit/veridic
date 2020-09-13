@@ -24,7 +24,7 @@ export function HomePage() {
   useInjectSaga({ key: 'homePage', saga });
 
   return (
-    <div>
+    <div className="pt-5">
       <Helmet>
         <title>HomePage</title>
         <meta name="description" content="Description of HomePage" />
