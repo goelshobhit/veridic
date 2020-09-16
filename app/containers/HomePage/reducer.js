@@ -30,10 +30,11 @@ const homePageReducer = (state = initialState, action) =>
       case ANIME_DATA_SUCCESS:
         if (action.payload.results.length < 16) {
           draft.hasMore = false;
+          draft.offset += 1;
         }
         draft.loading = false;
         draft.data = concat(state.data, action.payload.results);
-        draft.offset += 1;
+        draft.skip += 5;
         break;
       case ANIME_DATA_FAIL:
         draft.error = action.error;
