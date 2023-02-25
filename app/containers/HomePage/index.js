@@ -4,24 +4,20 @@
  *
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
-import { debounce, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 
-import InfiniteScroll from 'react-infinite-scroller';
-
-import Input from 'components/InputAdornments';
-import AnimeCard from 'components/AnimeCard';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import HoverableCard from 'components/HoverableCard';
+import Loader from 'components/Loader';
 import Snackbar from '@material-ui/core/Snackbar';
 
 import Grid from '@material-ui/core/Grid';
-import Button from '@material-ui/core/Button';
 
 import { useInjectSaga } from 'utils/injectSaga';
 import { useInjectReducer } from 'utils/injectReducer';
@@ -30,11 +26,7 @@ import reducer from './reducer';
 import saga from './saga';
 import { getAnimeData } from './actions';
 
-export function HomePage({
-  OnRequestAnimeData,
-  homePage: { loading, data, hasMore, error },
-}) {
-  const [qData, setQData] = useState();
+export function HomePage({ OnRequestAnimeData, homePage: { data, loading } }) {
   useInjectReducer({ key: 'homePage', reducer });
   useInjectSaga({ key: 'homePage', saga });
 
@@ -44,28 +36,13 @@ export function HomePage({
 
   const { open } = state;
 
-  const handleClick = () => {
-    setState({ open: true });
-  };
-
   const handleClose = () => {
     setState({ open: false });
   };
 
   useEffect(() => {
-    if (!isEmpty(error)) {
-      handleClick();
-    }
-  }, [error]);
-
-  function inputChange(value) {
-    OnRequestAnimeData(value);
-    setQData(value);
-  }
-
-  function loadMoreItems() {
-    OnRequestAnimeData(qData);
-  }
+    OnRequestAnimeData();
+  }, []);
 
   function renderItems() {
     if (isEmpty(data)) {
@@ -84,18 +61,20 @@ export function HomePage({
             xs="auto"
             sm="auto"
             md="auto"
-            lg={3}
-            xl={3}
+            lg={4}
+            xl={4}
             key={item.mal_id}
           >
-            <AnimeCard item={item} key={item.mal_id} />
+            <HoverableCard item={item} key={item.mal_id} />
           </Grid>
         ))}
       </Grid>
     );
   }
 
-  function loadMoreItemsIS() {}
+  function renderLoading() {
+    return <Loader />;
+  }
 
   return (
     <div className="pt-5">
@@ -103,41 +82,7 @@ export function HomePage({
         <title>HomePage</title>
         <meta name="description" content="Description of HomePage" />
       </Helmet>
-      <Input inputChange={debounce(inputChange, 1000)} data-aos="fade-down" />
-      <InfiniteScroll
-        pageStart={0}
-        loadMore={loadMoreItemsIS}
-        hasMore={hasMore}
-        loader={
-          loading ? (
-            <CircularProgress
-              key="loader"
-              className="d-flex flex-row align-items-center justify-content-center"
-            />
-          ) : (
-            <div key="null" />
-          )
-        }
-        style={{ marginTop: '100px' }}
-        className="List"
-      >
-        {renderItems()}
-      </InfiniteScroll>
-      {!isEmpty(qData) && !isEmpty(data) ? (
-        <Button
-          variant="contained"
-          color="secondary"
-          onClick={loadMoreItems}
-          disabled={isEmpty(data)}
-          style={{
-            marginBottom: 24,
-            marginTop: 90,
-          }}
-          fullWidth
-        >
-          Load More
-        </Button>
-      ) : null}
+      {loading ? renderLoading() : renderItems()}
       <Snackbar
         anchorOrigin={{
           vertical: 'top',

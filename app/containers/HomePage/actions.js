@@ -6,9 +6,9 @@
 
 import {
   DEFAULT_ACTION,
-  GET_ANIME_DATA,
-  ANIME_DATA_SUCCESS,
-  ANIME_DATA_FAIL,
+  GET_TECH_CRUNCH_DATA,
+  TECH_CRUNCH_DATA_SUCCESS,
+  TECH_CRUNCH_DATA_FAIL,
 } from './constants';
 
 export function defaultAction() {
@@ -18,16 +18,16 @@ export function defaultAction() {
 }
 
 export const getAnimeData = params => ({
-  type: GET_ANIME_DATA,
+  type: GET_TECH_CRUNCH_DATA,
   params,
 });
 
-export const animeDataSuccess = payload => ({
-  type: ANIME_DATA_SUCCESS,
+export const techCrunchDataSuccess = payload => ({
+  type: TECH_CRUNCH_DATA_SUCCESS,
   payload,
 });
 
-export const animeDataFail = error => ({
-  type: ANIME_DATA_FAIL,
+export const techCrunchDataFail = error => ({
+  type: TECH_CRUNCH_DATA_FAIL,
   error,
 });

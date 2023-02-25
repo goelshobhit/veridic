@@ -1,6 +1,6 @@
 /**
  *
- * Asynchronously loads the component for AnimeCard
+ * Asynchronously loads the component for HoverableCard
  *
  */
 

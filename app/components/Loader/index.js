@@ -15,7 +15,38 @@ function Loader() {
       className="d-flex flex-column align-items-center justify-content-center"
       style={{ width: '100vw', height: '100vh' }}
     >
-      <div id="loading" />
+      <div className="square-wrap">
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+        <div className="square" />
+      </div>
     </div>
   );
 }

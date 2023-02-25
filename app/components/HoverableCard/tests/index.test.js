@@ -1,6 +1,6 @@
 /**
  *
- * Tests for InputAdornments
+ * Tests for HoverableCard
  *
  * @see https://github.com/react-boilerplate/react-boilerplate/tree/master/docs/testing
  *
@@ -8,14 +8,20 @@
 
 import React from 'react';
 import { render } from 'react-testing-library';
+import { IntlProvider } from 'react-intl';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import InputAdornments from '../index';
+import HoverableCard from '../index';
+import { DEFAULT_LOCALE } from '../../../i18n';
 
-describe('<InputAdornments />', () => {
+describe('<HoverableCard />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
-    render(<InputAdornments />);
+    render(
+      <IntlProvider locale={DEFAULT_LOCALE}>
+        <HoverableCard />
+      </IntlProvider>,
+    );
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -31,7 +37,11 @@ describe('<InputAdornments />', () => {
   it.skip('Should render and match the snapshot', () => {
     const {
       container: { firstChild },
-    } = render(<InputAdornments />);
+    } = render(
+      <IntlProvider locale={DEFAULT_LOCALE}>
+        <HoverableCard />
+      </IntlProvider>,
+    );
     expect(firstChild).toMatchSnapshot();
   });
 });

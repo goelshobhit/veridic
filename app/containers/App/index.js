@@ -13,8 +13,6 @@ import { Switch, Route } from 'react-router-dom';
 
 import HomePage from 'containers/HomePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
-import Particles from 'react-particles-js';
-import particleJson from 'assets/particle.json';
 
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -41,12 +39,6 @@ export function App() {
 
   return (
     <div>
-      <Particles
-        style={{ position: 'absolute' }}
-        height="100%"
-        width="100%"
-        params={particleJson}
-      />
       <Container fixed disableGutters>
         <Switch>
           <Route exact path="/" component={HomePage} />
